@@ -13,6 +13,8 @@ import java.util.List;
 @RequestMapping("/reservations")
 public class ReservationController {
 
+
+
     @Autowired
     private ReservationService reservationService;
 
@@ -31,10 +33,12 @@ public class ReservationController {
         return reservationService.createReservation(reservation);
     }
 
-    @PutMapping("/{id}/close")
-    public Reservation closeReservation(@PathVariable Long id, @RequestParam ReservationStatus status) {
+
+    @PutMapping("/{id}/close/{status}")
+    public Reservation closeReservation(@PathVariable Long id, @PathVariable ReservationStatus status) {
         return reservationService.closeReservation(id, status);
     }
+
 
     @GetMapping("/date-range")
     public List<Reservation> getReservationsByDateRange(@RequestParam LocalDateTime start, @RequestParam LocalDateTime end) {
