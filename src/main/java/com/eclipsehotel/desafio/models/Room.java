@@ -18,7 +18,6 @@ public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
 
     private String roomNumber;
@@ -26,4 +25,7 @@ public class Room {
     private String type;
 
     private BigDecimal price;
+
+    @Enumerated(EnumType.STRING)
+    private RoomStatus status;
 }

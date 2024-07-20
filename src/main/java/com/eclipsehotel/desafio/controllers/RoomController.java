@@ -1,8 +1,10 @@
 package com.eclipsehotel.desafio.controllers;
 
 import com.eclipsehotel.desafio.models.Room;
+import com.eclipsehotel.desafio.models.RoomStatus;
 import com.eclipsehotel.desafio.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,4 +40,22 @@ public class RoomController {
     public void deleteRoom(@PathVariable Long id) {
         roomService.deleteRoom(id);
     }
+
+    // Novo endpoint para obter quartos ocupados
+    @GetMapping("/occupied")
+    public List<Room> getOccupiedRooms() {
+        return roomService.getOccupiedRooms();
+    }
+
+    @PutMapping("/{id}/status")
+    public ResponseEntity<Room> updateRoomStatus(@PathVariable Long id, @RequestBody RoomStatus status) {
+        Room updatedRoom = roomService.updateRoomStatus(id, status);
+        if (updatedRoom != null) {
+            return ResponseEntity.ok(updatedRoom);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
 }
