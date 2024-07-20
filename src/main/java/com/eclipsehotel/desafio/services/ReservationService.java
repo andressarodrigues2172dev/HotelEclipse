@@ -1,6 +1,5 @@
 package com.eclipsehotel.desafio.services;
 
-
 import com.eclipsehotel.desafio.models.Reservation;
 import com.eclipsehotel.desafio.models.ReservationStatus;
 import com.eclipsehotel.desafio.repositorys.ReservationRepository;
@@ -9,12 +8,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class ReservationService {
-
 
     private static final Logger logger = LoggerFactory.getLogger(ReservationService.class);
 
@@ -49,11 +48,14 @@ public class ReservationService {
         }
     }
 
-    public List<Reservation> getReservationsByDateRange(LocalDateTime start, LocalDateTime end) {
-        logger.info("Fetching reservations between {} and {}", start, end);
-        return reservationRepository.findByCheckinBetween(start, end);
-    }
+    public List<Reservation> getReservationsByDateRange(LocalDate startDate, LocalDate endDate) {
+        // Converta LocalDate para LocalDateTime no serviço, se necessário
+        LocalDateTime startDateTime = startDate.atStartOfDay();
+        LocalDateTime endDateTime = endDate.atStartOfDay().plusDays(1); // Ajuste para incluir o final do dia
 
+        // Implemente a lógica de busca usando LocalDateTime
+        return reservationRepository.findByCheckinBetween(startDateTime, endDateTime);
+    }
     public List<Reservation> getOccupiedRooms() {
         logger.info("Fetching occupied rooms");
         return reservationRepository.findByStatus(ReservationStatus.IN_USE);

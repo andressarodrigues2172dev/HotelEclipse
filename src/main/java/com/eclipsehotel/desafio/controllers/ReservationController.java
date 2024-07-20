@@ -6,14 +6,14 @@ import com.eclipsehotel.desafio.services.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
 @RequestMapping("/reservations")
 public class ReservationController {
-
-
 
     @Autowired
     private ReservationService reservationService;
@@ -33,19 +33,37 @@ public class ReservationController {
         return reservationService.createReservation(reservation);
     }
 
-
-    @PutMapping("/{id}/close/{status}")
-    public Reservation closeReservation(@PathVariable Long id, @PathVariable ReservationStatus status) {
+    @PutMapping("/{id}")
+    public Reservation closeReservation(@PathVariable Long id, @RequestParam ReservationStatus status) {
         return reservationService.closeReservation(id, status);
     }
 
-
     @GetMapping("/date-range")
-    public List<Reservation> getReservationsByDateRange(@RequestParam LocalDateTime start, @RequestParam LocalDateTime end) {
-        return reservationService.getReservationsByDateRange(start, end);
+    public List<Reservation> getReservationsByDateRange(
+            @RequestParam("start") String startDate,
+            @RequestParam("end") String endDate) {
+
+        // Defina o formato de data
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // Remove espaços e novas linhas dos inputs
+        startDate = startDate.trim();
+        endDate = endDate.trim();
+
+        // Converta Strings para LocalDate
+        LocalDate startLocalDate = LocalDate.parse(startDate, formatter);
+        LocalDate endLocalDate = LocalDate.parse(endDate, formatter);
+
+        // Converta LocalDate para LocalDateTime (começo do dia)
+        LocalDateTime startDateTime = startLocalDate.atStartOfDay();
+        LocalDateTime endDateTime = endLocalDate.atStartOfDay().plusDays(1); // Ajuste para incluir o final do dia
+
+        // Chame o serviço com os parâmetros ajustados
+        return reservationService.getReservationsByDateRange(startLocalDate, endLocalDate);
     }
 
-    @GetMapping("/occupied")
+
+    @GetMapping("/occupied-rooms")
     public List<Reservation> getOccupiedRooms() {
         return reservationService.getOccupiedRooms();
     }
