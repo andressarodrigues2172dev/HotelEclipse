@@ -1,4 +1,4 @@
-![Banner](img/Banner.png)
+![Banner para loja online de frete grátis para todo Brasil (4)](https://github.com/user-attachments/assets/c35529af-8934-4cee-b7e2-2a018b2900fb)
 
 # Eclipse Hotel API
 
