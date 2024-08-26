@@ -50,6 +50,7 @@ Content-Type: application/json
   "phone": "123432656"
 }
 &nbsp;
+```
 ### Criar Quartos
 ```http
 POST /rooms
@@ -61,6 +62,7 @@ Content-Type: application/json
   "price": 250.0
 }
 &nbsp;
+```
 ### Criar Reservas 
 
 ```http
@@ -77,6 +79,7 @@ Content-Type: application/json
 
 &nbsp;
 &nbsp;
+```
 ## 📊 Consultas SQL
 
 
