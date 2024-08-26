@@ -76,10 +76,10 @@ Content-Type: application/json
   "checkout": "2024-08-10T12:00:00",
   "status": "SCHEDULED"
 }
-
-&nbsp;
-&nbsp;
 ```
+&nbsp;
+&nbsp;
+
 ## 📊 Consultas SQL
 
 
